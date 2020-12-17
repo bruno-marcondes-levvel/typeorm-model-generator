@@ -77,24 +77,24 @@ function generateModels(
             `${casedFileName}.ts`
         );
         const rendered = entityCompliedTemplate(element);
-        const withImportStatements = removeUnusedImports(
-            EOL !== eolConverter[generationOptions.convertEol]
-                ? rendered.replace(
-                      /(\r\n|\n|\r)/gm,
-                      eolConverter[generationOptions.convertEol]
-                  )
-                : rendered
-        );
+        // const withImportStatements = removeUnusedImports(
+        //     EOL !== eolConverter[generationOptions.convertEol]
+        //         ? rendered.replace(
+        //               /(\r\n|\n|\r)/gm,
+        //               eolConverter[generationOptions.convertEol]
+        //           )
+        //         : rendered
+        // );
         let formatted = "";
         try {
-            formatted = Prettier.format(withImportStatements, prettierOptions);
+            formatted = Prettier.format(rendered, prettierOptions);
         } catch (error) {
             console.error(
                 "There were some problems with model generation for table: ",
                 element.sqlName
             );
             console.error(error);
-            formatted = withImportStatements;
+            formatted = rendered;
         }
         fs.writeFileSync(resultFilePath, formatted, {
             encoding: "utf-8",
