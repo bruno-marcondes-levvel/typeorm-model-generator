@@ -2,6 +2,7 @@
 {{/inline}}
 
 {{#*inline "Import"}}
+import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
 {{/inline}}
 
 {{#*inline "Column"}}
@@ -29,5 +30,7 @@ export {{defaultExport}} class {{toEntityName tscName}}{{#activeRecord}} extends
 {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
 }
 {{/inline}}
+
+{{#fileImports}}{{> Import}}{{/fileImports}}
 
 {{> Entity}}
