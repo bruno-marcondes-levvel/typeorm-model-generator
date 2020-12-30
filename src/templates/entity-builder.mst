@@ -2,18 +2,17 @@
 {{/inline}}
 
 {{#*inline "Import"}}
-import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
 {{/inline}}
 
 {{#*inline "Column"}}
-.entity('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}{{#if options.nullable}} | null{{/if}}')
+.field('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}')
 {{/inline}}
 
 {{#*inline "JoinColumnOptions"}}
 {{/inline}}
 
 {{#*inline "Relation"}}
-.field('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}')
+.entity('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
 {{/inline}}
 
 {{#*inline "RelationId"}}
