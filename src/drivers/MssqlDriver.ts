@@ -147,22 +147,22 @@ WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA in (${schema}) AND TABLE_CATALOG 
                             tscType = "number";
                             break;
                         case "date":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "datetime2":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "datetime":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "datetimeoffset":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "smalldatetime":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "time":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "char":
                             tscType = "string";
@@ -198,7 +198,7 @@ WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA in (${schema}) AND TABLE_CATALOG 
                             tscType = "string";
                             break;
                         case "timestamp":
-                            tscType = "Date";
+                            tscType = "date";
                             break;
                         case "uniqueidentifier":
                             tscType = "string";
