@@ -12,6 +12,7 @@ import { Relation } from "./models/Relation";
 const prettierOptions: Prettier.Options = {
     parser: "typescript",
     endOfLine: "auto",
+    singleQuote: true,
 };
 
 export default function modelGenerationPhase(
@@ -48,7 +49,7 @@ function generateModels(
     const entityTemplatePath = path.resolve(
         __dirname,
         "templates",
-        "entity.mst"
+        "entity-builder.mst"
     );
     const entityTemplate = fs.readFileSync(entityTemplatePath, "utf-8");
     const entityCompliedTemplate = Handlebars.compile(entityTemplate, {

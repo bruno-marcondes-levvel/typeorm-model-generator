@@ -1,0 +1,38 @@
+{{#*inline "Index"}}
+{{/inline}}
+
+{{#*inline "Import"}}
+import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
+{{/inline}}
+
+{{#*inline "Column"}}
+.entity('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}{{#if options.nullable}} | null{{/if}}')
+{{/inline}}
+
+{{#*inline "JoinColumnOptions"}}
+{{/inline}}
+
+{{#*inline "Relation"}}
+.field('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}')
+{{/inline}}
+
+{{#*inline "RelationId"}}
+{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
+{{/inline}}
+
+{{#*inline "Constructor"}}
+{{/inline}}
+
+{{#*inline "Entity"}}
+import { EntityBuilder } from 'schemas/entity-builder';
+
+export default EntityBuilder.create('{{toEntityName tscName}}')
+{{#columns}}{{> Column}}{{/columns~}}
+{{#relations}}{{> Relation}}{{/relations~}}
+{{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
+.build();
+{{/inline}}
+
+{{#fileImports}}{{> Import}}{{/fileImports}}
+
+{{> Entity}}
