@@ -1,33 +1,57 @@
-{{#*inline "Index"}}
-{{/inline}}
+{{! STARTING - INDEX }}
+    {{#*inline "Index"}}
+    {{/inline}}
+{{! ENDING - INDEX }}
 
-{{#*inline "Import"}}
-{{/inline}}
 
-{{#*inline "Column"}}
-{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}:{{tscType}}{{#if options.nullable}} | null{{/if}};
-{{/inline}}
+{{! STARTING - IMPORT }}
+    {{#*inline "Import"}}
+    {{/inline}}
+{{! ENDING - IMPORT }}
 
-{{#*inline "JoinColumnOptions"}}
-{{/inline}}
 
-{{#*inline "Relation"}}
-{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{toRelation (toEntityName relatedTable) relationType}};
-{{/inline}}
+{{! STARTING - COLUMN }}
+    {{#*inline "Column"}}
+    {{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}:{{tscType}}{{#if options.nullable}} | null{{/if}};
+    {{/inline}}
+{{! ENDING - COLUMN }}
 
-{{#*inline "RelationId"}}
-{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
-{{/inline}}
 
-{{#*inline "Constructor"}}
-{{/inline}}
+{{! STARTING - JOIN_COLUMN_OPTIONS }}
+    {{#*inline "JoinColumnOptions"}}
+    {{/inline}}
+{{! ENDING - JOIN_COLUMN_OPTIONS }}
 
-{{#*inline "Entity"}}
-export {{defaultExport}} class {{toEntityName tscName}}{{#activeRecord}} extends BaseEntity{{/activeRecord}} {
-{{#columns}}{{> Column}}{{/columns~}}
-{{#relations}}{{> Relation}}{{/relations~}}
-{{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
-}
-{{/inline}}
+
+{{! STARTING - RELATION }}
+    {{#*inline "Relation"}}
+    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{toRelation (toEntityName relatedTable) relationType}};
+    {{/inline}}
+{{! ENDING - RELATION }}
+
+
+{{! STARTING - RELATION_ID }}
+    {{#*inline "RelationId"}}
+    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
+    {{/inline}}
+{{! ENDING - RELATION_ID }}
+
+
+{{! STARTING - CONSTRUCTOR }}
+    {{#*inline "Constructor"}}
+    {{/inline}}
+{{! ENDING - CONSTRUCTOR }}
+
+
+{{! STARTING - ENTITY }}
+    {{#*inline "Entity"}}
+    export {{defaultExport}} class {{toEntityName tscName}}{{#activeRecord}} extends BaseEntity{{/activeRecord}} {
+    {{#columns}}{{> Column}}{{/columns~}}
+    {{#relations}}{{> Relation}}{{/relations~}}
+    {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
+    }
+    {{/inline}}
+{{! ENDING - ENTITY }}
+
 
 {{> Entity}}

@@ -1,34 +1,34 @@
-{{! OPENING TEMPLATE: INDEX }}
+{{! STARTING - INDEX }}
     {{#*inline "Index"}}
     @Index("{{name}}",[{{#columns}}"{{toPropertyName .}}",{{/columns~}}],{ {{json options}} })
     {{/inline}}
-{{! CLOSING TEMPLATE: INDEX }}
+{{! ENDING - INDEX }}
 
 
-{{! OPENING TEMPLATE: IMPORT }}
+{{! STARTING - IMPORT }}
     {{#*inline "Import"}}
     import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
     {{/inline}}
-{{! CLOSING TEMPLATE: IMPORT }}
+{{! ENDING - IMPORT }}
 
 
-{{! OPENING TEMPLATE: COLUMN }}
+{{! STARTING - COLUMN }}
     {{#*inline "Column"}}
     {{#generated}}@PrimaryGeneratedColumn({ type:"{{type}}", {{/generated}}{{^generated}}@Column("{{type}}",{ {{#primary}}primary:{{primary}},{{/primary}}{{/generated}}{{json options}}{{#default}},default: {{.}},{{/default}} })
     {{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}:{{tscType}}{{#if options.nullable}} | null{{/if}};
 
     {{/inline}}
-{{! CLOSING TEMPLATE: COLUMN }}
+{{! ENDING - COLUMN }}
 
 
-{{! OPENING TEMPLATE: JOIN_COLUMN_OPTIONS }}
-{{#*inline "JoinColumnOptions"}}
-{ name: "{{name}}", referencedColumnName: "{{toPropertyName referencedColumnName}}" },
-{{/inline}}
-{{! CLOSING TEMPLATE: JOIN_COLUMN_OPTIONS }}
+{{! STARTING - JOIN_COLUMN_OPTIONS }}
+    {{#*inline "JoinColumnOptions"}}
+    { name: "{{name}}", referencedColumnName: "{{toPropertyName referencedColumnName}}" },
+    {{/inline}}
+{{! ENDING - JOIN_COLUMN_OPTIONS }}
 
 
-{{! OPENING TEMPLATE: RELATION }}
+{{! STARTING - RELATION }}
     {{#*inline "Relation"}}
     @{{relationType}}(()=>{{toEntityName relatedTable}},{{toPropertyName relatedTable}}=>{{toPropertyName relatedTable}}.{{toPropertyName relatedField}}{{#if relationOptions}},{ {{json relationOptions}} }{{/if}})
     {{#if joinColumnOptions}}@JoinColumn([{{#joinColumnOptions}}{{> JoinColumnOptions}}{{/joinColumnOptions}}]){{/if}}
@@ -36,29 +36,29 @@
     {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{toRelation (toEntityName relatedTable) relationType}};
 
     {{/inline}}
-{{! CLOSING TEMPLATE: RELATION }}
+{{! ENDING - RELATION }}
 
 
-{{! OPENING TEMPLATE: RELATION_ID }}
+{{! STARTING - RELATION_ID }}
     {{#*inline "RelationId"}}
     @RelationId(({{toPropertyName entityName}}:{{toEntityName entityName}})=>{{toPropertyName entityName}}.{{toPropertyName relationField}})
     {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
 
     {{/inline}}
-{{! CLOSING TEMPLATE: RELATION_ID }}
+{{! ENDING - RELATION_ID }}
 
 
-{{! OPENING TEMPLATE: CONSTRUCTOR }}
+{{! STARTING - CONSTRUCTOR }}
     {{#*inline "Constructor"}}
     {{printPropertyVisibility}}constructor(init?: Partial<{{toEntityName entityName}}>) {
         {{#activeRecord}}super();
         {{/activeRecord}}Object.assign(this, init);
     }
     {{/inline}}
-{{! CLOSING TEMPLATE: CONSTRUCTOR }}
+{{! ENDING - CONSTRUCTOR }}
 
 
-{{! OPENING TEMPLATE: ENTITY }}
+{{! STARTING - ENTITY }}
     {{#*inline "Entity"}}
     {{#indices}}{{> Index}}{{/indices~}}
     @Entity("{{sqlName}}"{{#schema}} ,{schema:"{{.}}"{{#if ../database}}, database:"{{../database}}"{{/if}} } {{/schema}})
@@ -70,7 +70,7 @@
     {{#if generateConstructor}}{{>Constructor entityName=tscName}}{{/if~}}
     }
     {{/inline}}
-{{! CLOSING TEMPLATE: ENTITY }}
+{{! ENDING - ENTITY }}
 
 
 import {BaseEntity,Column,Entity,Index,JoinColumn,JoinTable,ManyToMany,ManyToOne,OneToMany,OneToOne,PrimaryColumn,PrimaryGeneratedColumn,RelationId} from "typeorm";

@@ -1,37 +1,62 @@
-{{#*inline "Index"}}
-{{/inline}}
+{{! STARTING - INDEX }}
+    {{#*inline "Index"}}
+    {{/inline}}
+{{! ENDING - INDEX }}
 
-{{#*inline "Import"}}
-{{/inline}}
 
-{{#*inline "Column"}}
-.field('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}')
-{{/inline}}
+{{! STARTING - IMPORT }}
+    {{#*inline "Import"}}
+    {{/inline}}
+{{! ENDING - IMPORT }}
 
-{{#*inline "JoinColumnOptions"}}
-{{/inline}}
 
-{{#*inline "Relation"}}
-.entity('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
-{{/inline}}
+{{! STARTING - COLUMN }}
+    {{#*inline "Column"}}
+    .field('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}')
+    {{/inline}}
+{{! ENDING - COLUMN }}
 
-{{#*inline "RelationId"}}
-{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
-{{/inline}}
 
-{{#*inline "Constructor"}}
-{{/inline}}
+{{! STARTING - JOIN_COLUMN_OPTIONS }}
+    {{#*inline "JoinColumnOptions"}}
+    {{/inline}}
+{{! ENDING - JOIN_COLUMN_OPTIONS }}
 
-{{#*inline "Entity"}}
-import { EntityBuilder } from 'schemas/entity-builder';
 
-export default EntityBuilder.create('{{toEntityName tscName}}')
-{{#columns}}{{> Column}}{{/columns~}}
-{{#relations}}{{> Relation}}{{/relations~}}
-{{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
-.build();
-{{/inline}}
+{{! STARTING - RELATION }}
+    {{#*inline "Relation"}}
+    .entity('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
+    {{/inline}}
+{{! ENDING - RELATION }}
+
+
+{{! STARTING - RELATION_ID }}
+    {{#*inline "RelationId"}}
+    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
+    {{/inline}}
+{{! ENDING - RELATION_ID }}
+
+
+{{! STARTING - CONSTRUCTOR }}
+    {{#*inline "Constructor"}}
+    {{/inline}}
+{{! ENDING - CONSTRUCTOR }}
+
+
+{{! STARTING - ENTITY }}
+    {{#*inline "Entity"}}
+    import { EntityBuilder } from 'schemas/entity-builder';
+
+    export default EntityBuilder.create('{{toEntityName tscName}}')
+    {{#columns}}{{> Column}}{{/columns~}}
+    {{#relations}}{{> Relation}}{{/relations~}}
+    {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
+    .build();
+    {{/inline}}
+{{! ENDING - ENTITY }}
+
 
 {{#fileImports}}{{> Import}}{{/fileImports}}
+
 
 {{> Entity}}
