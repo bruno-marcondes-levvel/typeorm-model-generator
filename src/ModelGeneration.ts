@@ -49,7 +49,7 @@ function generateModels(
     const entityTemplatePath = path.resolve(
         __dirname,
         "templates",
-        "entity-builder.mst"
+        generationOptions.entityTemplate
     );
     const entityTemplate = fs.readFileSync(entityTemplatePath, "utf-8");
     const entityCompliedTemplate = Handlebars.compile(entityTemplate, {
