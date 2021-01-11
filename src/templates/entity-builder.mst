@@ -49,7 +49,7 @@
 
 {{! STARTING - RELATION }}
     {{#*inline "Relation"}}
-    .entity('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
+    .model('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
     {{/inline}}
 {{! ENDING - RELATION }}
 
@@ -79,9 +79,9 @@
 
 {{! STARTING - ENTITY }}
     {{#*inline "Entity"}}
-    import { EntityBuilder } from 'schemas/entity-builder';
+    import { ModelBuilder } from 'schemas/model-builder';
 
-    export default EntityBuilder.create({{> EntityOptions}})
+    export default ModelBuilder.create({{> EntityOptions}})
     {{#indices}}{{> Index}}{{/indices~}}
     {{#columns}}{{> Column}}{{/columns~}}
     {{#relations}}{{> Relation}}{{/relations~}}

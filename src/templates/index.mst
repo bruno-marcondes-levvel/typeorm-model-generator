@@ -1,5 +1,11 @@
+import { Model } from 'schemas/model';
+
 {{#entities~}}
-import {{localImport (toEntityName tscName)}} from './{{toFileName tscName}}'
+import {{toEntityName tscName}} from './{{toFileName tscName}}'
 {{/entities}}
 
-export { {{#entities}}{{toEntityName tscName}},{{/entities~}} }
+const schemas: Model[] = [
+    {{#entities}}{{toEntityName tscName}},{{/entities~}}
+];
+
+export default schemas;
