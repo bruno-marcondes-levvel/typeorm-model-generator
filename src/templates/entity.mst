@@ -1,39 +1,61 @@
 {{! STARTING - INDEX }}
     {{#*inline "Index"}}
-    @Index("{{name}}",[{{#columns}}"{{toPropertyName .}}",{{/columns~}}],{ {{json options}} })
+        @Index("{{name}}",[{{#columns}}"{{toPropertyName .}}",{{/columns~}}],{ {{json options}} })
     {{/inline}}
 {{! ENDING - INDEX }}
 
 
 {{! STARTING - IMPORT }}
     {{#*inline "Import"}}
-    import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
+        import {{localImport (toEntityName entityName)}} from './{{toFileName fileName}}'
     {{/inline}}
 {{! ENDING - IMPORT }}
 
 
 {{! STARTING - COLUMN }}
     {{#*inline "Column"}}
-    {{#generated}}@PrimaryGeneratedColumn({ type:"{{type}}", {{/generated}}{{^generated}}@Column("{{type}}",{ {{#primary}}primary:{{primary}},{{/primary}}{{/generated}}{{json options}}{{#default}},default: {{.}},{{/default}} })
-    {{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}:{{tscType}}{{#if options.nullable}} | null{{/if}};
-
+        {{#generated}}
+            @PrimaryGeneratedColumn({ type:"{{type}}", {{/generated}}
+        {{^generated}}
+            @Column("{{type}}",{ {{#primary}}primary:{{primary}},{{/primary}}
+        {{/generated}}
+        {{json options}}
+        {{#default}}
+            ,default: {{.}},
+        {{/default}} 
+        })
+        {{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}:{{tscType}}{{#if options.nullable}} | null{{/if}};
+        
     {{/inline}}
 {{! ENDING - COLUMN }}
 
 
 {{! STARTING - JOIN_COLUMN_OPTIONS }}
     {{#*inline "JoinColumnOptions"}}
-    { name: "{{name}}", referencedColumnName: "{{toPropertyName referencedColumnName}}" },
+        { name: "{{name}}", referencedColumnName: "{{toPropertyName referencedColumnName}}" },
     {{/inline}}
 {{! ENDING - JOIN_COLUMN_OPTIONS }}
 
 
 {{! STARTING - RELATION }}
     {{#*inline "Relation"}}
-    @{{relationType}}(()=>{{toEntityName relatedTable}},{{toPropertyName relatedTable}}=>{{toPropertyName relatedTable}}.{{toPropertyName relatedField}}{{#if relationOptions}},{ {{json relationOptions}} }{{/if}})
-    {{#if joinColumnOptions}}@JoinColumn([{{#joinColumnOptions}}{{> JoinColumnOptions}}{{/joinColumnOptions}}]){{/if}}
-    {{#joinTableOptions}}@JoinTable({ name:"{{name}}", joinColumns:[{{#joinColumns}}{{> JoinColumnOptions}}{{/joinColumns}}],inverseJoinColumns:[{{#inverseJoinColumns}}{{> JoinColumnOptions}}{{/inverseJoinColumns}}],{{#database}}database:"{{.}}",{{/database}}{{#schema}}schema:"{{.}}"{{/schema}} }){{/joinTableOptions}}
-    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{toRelation (toEntityName relatedTable) relationType}};
+        @{{relationType}}(()=>{{toEntityName relatedTable}},{{toPropertyName relatedTable}}=>{{toPropertyName relatedTable}}.{{toPropertyName relatedField}}
+        {{#if relationOptions}}
+            ,{ {{json relationOptions}} }
+        {{/if}})
+        {{#if joinColumnOptions}}
+            @JoinColumn([{{#joinColumnOptions}}{{> JoinColumnOptions}}{{/joinColumnOptions}}])
+        {{/if}}
+        {{#joinTableOptions}}
+            @JoinTable({ 
+                name:"{{name}}", 
+                joinColumns:[{{#joinColumns}}{{> JoinColumnOptions}}{{/joinColumns}}], 
+                inverseJoinColumns:[{{#inverseJoinColumns}}{{> JoinColumnOptions}}{{/inverseJoinColumns}}], 
+                {{#database}}database:"{{.}}", {{/database}}
+                {{#schema}}schema:"{{.}}"{{/schema}} 
+            })
+        {{/joinTableOptions}}
+        {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{toRelation (toEntityName relatedTable) relationType}};
 
     {{/inline}}
 {{! ENDING - RELATION }}
@@ -41,8 +63,8 @@
 
 {{! STARTING - RELATION_ID }}
     {{#*inline "RelationId"}}
-    @RelationId(({{toPropertyName entityName}}:{{toEntityName entityName}})=>{{toPropertyName entityName}}.{{toPropertyName relationField}})
-    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
+        @RelationId(({{toPropertyName entityName}}:{{toEntityName entityName}})=>{{toPropertyName entityName}}.{{toPropertyName relationField}})
+        {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
 
     {{/inline}}
 {{! ENDING - RELATION_ID }}
@@ -50,25 +72,25 @@
 
 {{! STARTING - CONSTRUCTOR }}
     {{#*inline "Constructor"}}
-    {{printPropertyVisibility}}constructor(init?: Partial<{{toEntityName entityName}}>) {
-        {{#activeRecord}}super();
-        {{/activeRecord}}Object.assign(this, init);
-    }
+        {{printPropertyVisibility}}constructor(init?: Partial<{{toEntityName entityName}}>) {
+            {{#activeRecord}}super();{{/activeRecord}}
+            Object.assign(this, init);
+        }
     {{/inline}}
 {{! ENDING - CONSTRUCTOR }}
 
 
 {{! STARTING - ENTITY }}
     {{#*inline "Entity"}}
-    {{#indices}}{{> Index}}{{/indices~}}
-    @Entity("{{sqlName}}"{{#schema}} ,{schema:"{{.}}"{{#if ../database}}, database:"{{../database}}"{{/if}} } {{/schema}})
-    export {{defaultExport}} class {{toEntityName tscName}}{{#activeRecord}} extends BaseEntity{{/activeRecord}} {
+        {{#indices}}{{> Index}}{{/indices~}}
+        @Entity("{{sqlName}}"{{#schema}} ,{schema:"{{.}}"{{#if ../database}}, database:"{{../database}}"{{/if}} } {{/schema}})
+        export {{defaultExport}} class {{toEntityName tscName}}{{#activeRecord}} extends BaseEntity{{/activeRecord}} {
 
-    {{#columns}}{{> Column}}{{/columns~}}
-    {{#relations}}{{> Relation}}{{/relations~}}
-    {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
-    {{#if generateConstructor}}{{>Constructor entityName=tscName}}{{/if~}}
-    }
+        {{#columns}}{{> Column}}{{/columns~}}
+        {{#relations}}{{> Relation}}{{/relations~}}
+        {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
+        {{#if generateConstructor}}{{>Constructor entityName=tscName}}{{/if~}}
+        }
     {{/inline}}
 {{! ENDING - ENTITY }}
 
