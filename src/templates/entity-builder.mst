@@ -33,7 +33,6 @@
 
 {{! STARTING - RELATION_ID }}
     {{#*inline "RelationId"}}
-    {{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}:{{fieldType}};
     {{/inline}}
 {{! ENDING - RELATION_ID }}
 
@@ -52,7 +51,6 @@
     {{#indices}}{{> Index}}{{/indices~}}
     {{#columns}}{{> Column}}{{/columns~}}
     {{#relations}}{{> Relation}}{{/relations~}}
-    {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
     .build();
     {{/inline}}
 {{! ENDING - ENTITY }}
