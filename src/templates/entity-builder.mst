@@ -13,7 +13,30 @@
 
 {{! STARTING - COLUMN }}
     {{#*inline "Column"}}
-    .field('{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', '{{tscType}}')
+    .column(
+        '{{printPropertyVisibility}}{{toPropertyName tscName}}{{strictMode}}', 
+        '{{tscType}}',
+        {
+            {{#generated}}
+                generated: {{generated}},
+            {{/generated}}
+            {{^generated}}
+                {{#primary}}primary: {{primary}},{{/primary}}
+            {{/generated}}
+            type: '{{type}}',
+            name: '{{options.name}}',
+            {{#if options.length}}length: {{options.length}},{{/if}}
+            {{#if options.width}}width: {{options.width}},{{/if}}
+            {{#if options.nullable}}nullable: {{options.nullable}},{{/if}}
+            {{#if options.unique}}unique: {{options.unique}},{{/if}}
+            {{#if options.precision}}precision: {{options.precision}},{{/if}}
+            {{#if options.scale}}scale: {{options.scale}},{{/if}}
+            {{#if options.unsigned}}unsigned: {{options.unsigned}},{{/if}}
+            {{#if options.enum}}enum: {{options.enum}},{{/if}}
+            {{#if options.array}}array: {{options.array}},{{/if}}
+            {{#if options.comment}}comment: '{{options.comment}}',{{/if}}
+        }
+    )
     {{/inline}}
 {{! ENDING - COLUMN }}
 
@@ -43,11 +66,22 @@
 {{! ENDING - CONSTRUCTOR }}
 
 
+{{! STARTING - ENTITY_OPTIONS }}
+    {{#*inline "EntityOptions"}}
+        '{{toEntityName tscName}}',
+        {
+            {{#schema}}schema: '{{.}}',{{/schema}}
+            {{#sqlName}}sqlName: '{{.}}',{{/sqlName}}
+        }
+    {{/inline}}
+{{! ENDING - ENTITY_OPTIONS }}
+
+
 {{! STARTING - ENTITY }}
     {{#*inline "Entity"}}
     import { EntityBuilder } from 'schemas/entity-builder';
 
-    export default EntityBuilder.create('{{toEntityName tscName}}')
+    export default EntityBuilder.create({{> EntityOptions}})
     {{#indices}}{{> Index}}{{/indices~}}
     {{#columns}}{{> Column}}{{/columns~}}
     {{#relations}}{{> Relation}}{{/relations~}}
