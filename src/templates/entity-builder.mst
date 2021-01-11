@@ -1,5 +1,6 @@
 {{! STARTING - INDEX }}
     {{#*inline "Index"}}
+        .index('{{name}}', [{{#columns}}'{{toPropertyName .}}',{{/columns~}}], { {{json options}} })
     {{/inline}}
 {{! ENDING - INDEX }}
 
@@ -48,6 +49,7 @@
     import { EntityBuilder } from 'schemas/entity-builder';
 
     export default EntityBuilder.create('{{toEntityName tscName}}')
+    {{#indices}}{{> Index}}{{/indices~}}
     {{#columns}}{{> Column}}{{/columns~}}
     {{#relations}}{{> Relation}}{{/relations~}}
     {{#relationIds}}{{> RelationId entityName=../tscName}}{{/relationIds~}}
