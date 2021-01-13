@@ -43,13 +43,14 @@
 
 {{! STARTING - JOIN_COLUMN_OPTIONS }}
     {{#*inline "JoinColumnOptions"}}
+        { {{name}}: '{{toPropertyName referencedColumnName}}' },
     {{/inline}}
 {{! ENDING - JOIN_COLUMN_OPTIONS }}
 
 
 {{! STARTING - RELATION }}
     {{#*inline "Relation"}}
-    .model('{{printPropertyVisibility}}{{toPropertyName fieldName}}{{strictMode}}', '{{toRelation (toEntityName relatedTable) relationType}}', {})
+        .relation('{{relationType}}', '{{toEntityName relatedTable}}', '{{toPropertyName relatedField}}', '{{toPropertyName fieldName}}', {{#joinColumnOptions}}{{> JoinColumnOptions}}{{/joinColumnOptions}})
     {{/inline}}
 {{! ENDING - RELATION }}
 
