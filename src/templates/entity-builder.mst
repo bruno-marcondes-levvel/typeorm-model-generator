@@ -50,7 +50,17 @@
 
 {{! STARTING - RELATION }}
     {{#*inline "Relation"}}
-        .relation('{{relationType}}', '{{toEntityName relatedTable}}', '{{toPropertyName relatedField}}', '{{toPropertyName fieldName}}', {{#joinColumnOptions}}{{> JoinColumnOptions}}{{/joinColumnOptions}})
+        .relation(
+            '{{relationType}}', 
+            '{{toEntityName relatedTable}}', 
+            '{{toPropertyName relatedField}}', 
+            '{{toPropertyName fieldName}}', 
+            {{#joinColumnOptions}}
+                {{> JoinColumnOptions}}
+            {{/joinColumnOptions}}
+            {{^joinColumnOptions}}
+                {}
+            {{/joinColumnOptions}})
     {{/inline}}
 {{! ENDING - RELATION }}
 
